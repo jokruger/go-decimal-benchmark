@@ -10,10 +10,11 @@ type floatPair struct {
 }
 
 type FloatTester struct {
-	parseCases []string
-	addCases   []floatPair
-	mulCases   []floatPair
-	divCases   []floatPair
+	parseCases  []string
+	stringCases []float64
+	addCases    []floatPair
+	mulCases    []floatPair
+	divCases    []floatPair
 }
 
 func NewFloatTester() Tester {
@@ -26,6 +27,15 @@ func (self *FloatTester) Name() string {
 
 func (self *FloatTester) Init() {
 	self.parseCases = ParseCases
+
+	self.stringCases = make([]float64, len(ParseCases))
+	for i, c := range ParseCases {
+		d, err := strconv.ParseFloat(c, 64)
+		if err != nil {
+			panic(err)
+		}
+		self.stringCases[i] = d
+	}
 
 	parsePairs := func(pairs []Pair) []floatPair {
 		result := make([]floatPair, len(pairs))
@@ -63,46 +73,37 @@ func (self *FloatTester) RunParse() int64 {
 }
 
 func (self *FloatTester) RunString() int64 {
-	var n int64
 	for range 100000 {
-		for _, c := range self.addCases {
-			_ = strconv.FormatFloat(c.a, 'f', -1, 64)
-			_ = strconv.FormatFloat(c.b, 'f', -1, 64)
-			n += 2
+		for _, c := range self.stringCases {
+			_ = strconv.FormatFloat(c, 'f', -1, 64)
 		}
 	}
-	return n
+	return int64(len(self.stringCases) * 100000)
 }
 
 func (self *FloatTester) RunAdd() int64 {
-	var n int64
 	for range 100000 {
 		for _, c := range self.addCases {
 			_ = c.a + c.b
-			n++
 		}
 	}
-	return n
+	return int64(len(self.addCases) * 100000)
 }
 
 func (self *FloatTester) RunMul() int64 {
-	var n int64
 	for range 100000 {
 		for _, c := range self.mulCases {
 			_ = c.a * c.b
-			n++
 		}
 	}
-	return n
+	return int64(len(self.mulCases) * 100000)
 }
 
 func (self *FloatTester) RunDiv() int64 {
-	var n int64
 	for range 100000 {
 		for _, c := range self.divCases {
 			_ = c.a / c.b
-			n++
 		}
 	}
-	return n
+	return int64(len(self.divCases) * 100000)
 }

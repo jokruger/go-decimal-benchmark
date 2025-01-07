@@ -10,10 +10,11 @@ type dec128Pair struct {
 }
 
 type Dec128Tester struct {
-	parseCases []string
-	addCases   []dec128Pair
-	mulCases   []dec128Pair
-	divCases   []dec128Pair
+	parseCases  []string
+	stringCases []dec128.Dec128
+	addCases    []dec128Pair
+	mulCases    []dec128Pair
+	divCases    []dec128Pair
 }
 
 func NewDec128Tester() Tester {
@@ -26,6 +27,15 @@ func (self *Dec128Tester) Name() string {
 
 func (self *Dec128Tester) Init() {
 	self.parseCases = ParseCases
+
+	self.stringCases = make([]dec128.Dec128, len(ParseCases))
+	for i, c := range ParseCases {
+		d := dec128.FromString(c)
+		if d.IsNaN() {
+			panic(d.ErrorDetails())
+		}
+		self.stringCases[i] = d
+	}
 
 	parsePairs := func(pairs []Pair) []dec128Pair {
 		result := make([]dec128Pair, len(pairs))
@@ -49,40 +59,33 @@ func (self *Dec128Tester) Init() {
 }
 
 func (self *Dec128Tester) RunParse() int64 {
-	var n int64
 	for range 100000 {
 		for _, c := range self.parseCases {
 			d := dec128.FromString(c)
 			if d.IsNaN() {
 				panic(d.ErrorDetails())
 			}
-			n++
 		}
 	}
-	return n
+	return int64(len(self.parseCases) * 100000)
 }
 
 func (self *Dec128Tester) RunString() int64 {
-	var n int64
 	for range 100000 {
-		for _, c := range self.addCases {
-			_ = c.a.String()
-			_ = c.b.String()
-			n += 2
+		for _, c := range self.stringCases {
+			_ = c.String()
 		}
 	}
-	return n
+	return int64(len(self.stringCases) * 100000)
 }
 
 func (self *Dec128Tester) RunAdd() int64 {
-	var n int64
 	for range 100000 {
 		for _, c := range self.addCases {
 			_ = c.a.Add(c.b)
-			n++
 		}
 	}
-	return n
+	return int64(len(self.addCases) * 100000)
 }
 
 func (self *Dec128Tester) RunMul() int64 {
@@ -97,12 +100,10 @@ func (self *Dec128Tester) RunMul() int64 {
 }
 
 func (self *Dec128Tester) RunDiv() int64 {
-	var n int64
 	for range 100000 {
 		for _, c := range self.divCases {
 			_ = c.a.Div(c.b)
-			n++
 		}
 	}
-	return n
+	return int64(len(self.divCases) * 100000)
 }

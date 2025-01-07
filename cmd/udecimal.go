@@ -10,10 +10,11 @@ type udecimalPair struct {
 }
 
 type UdecimalTester struct {
-	parseCases []string
-	addCases   []udecimalPair
-	mulCases   []udecimalPair
-	divCases   []udecimalPair
+	parseCases  []string
+	stringCases []udecimal.Decimal
+	addCases    []udecimalPair
+	mulCases    []udecimalPair
+	divCases    []udecimalPair
 }
 
 func NewUdecimalTester() Tester {
@@ -26,6 +27,15 @@ func (self *UdecimalTester) Name() string {
 
 func (self *UdecimalTester) Init() {
 	self.parseCases = ParseCases
+
+	self.stringCases = make([]udecimal.Decimal, len(ParseCases))
+	for i, c := range ParseCases {
+		d, err := udecimal.Parse(c)
+		if err != nil {
+			panic(err)
+		}
+		self.stringCases[i] = d
+	}
 
 	parsePairs := func(pairs []Pair) []udecimalPair {
 		result := make([]udecimalPair, len(pairs))
@@ -49,63 +59,52 @@ func (self *UdecimalTester) Init() {
 }
 
 func (self *UdecimalTester) RunParse() int64 {
-	var n int64
 	for range 100000 {
 		for _, c := range self.parseCases {
 			_, err := udecimal.Parse(c)
 			if err != nil {
 				panic(err)
 			}
-			n++
 		}
 	}
-	return n
+	return int64(len(self.parseCases) * 100000)
 }
 
 func (self *UdecimalTester) RunString() int64 {
-	var n int64
 	for range 100000 {
-		for _, c := range self.addCases {
-			_ = c.a.String()
-			_ = c.b.String()
-			n += 2
+		for _, c := range self.stringCases {
+			_ = c.String()
 		}
 	}
-	return n
+	return int64(len(self.stringCases) * 100000)
 }
 
 func (self *UdecimalTester) RunAdd() int64 {
-	var n int64
 	for range 100000 {
 		for _, c := range self.addCases {
 			_ = c.a.Add(c.b)
-			n++
 		}
 	}
-	return n
+	return int64(len(self.addCases) * 100000)
 }
 
 func (self *UdecimalTester) RunMul() int64 {
-	var n int64
 	for range 100000 {
 		for _, c := range self.mulCases {
 			_ = c.a.Mul(c.b)
-			n++
 		}
 	}
-	return n
+	return int64(len(self.mulCases) * 100000)
 }
 
 func (self *UdecimalTester) RunDiv() int64 {
-	var n int64
 	for range 100000 {
 		for _, c := range self.divCases {
 			_, err := c.a.Div(c.b)
 			if err != nil {
 				panic(err)
 			}
-			n++
 		}
 	}
-	return n
+	return int64(len(self.divCases) * 100000)
 }

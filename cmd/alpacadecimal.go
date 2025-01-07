@@ -10,10 +10,11 @@ type alpacadecimalPair struct {
 }
 
 type AlpacadecimalTester struct {
-	parseCases []string
-	addCases   []alpacadecimalPair
-	mulCases   []alpacadecimalPair
-	divCases   []alpacadecimalPair
+	parseCases  []string
+	stringCases []decimal.Decimal
+	addCases    []alpacadecimalPair
+	mulCases    []alpacadecimalPair
+	divCases    []alpacadecimalPair
 }
 
 func NewAlpacadecimalTester() Tester {
@@ -26,6 +27,15 @@ func (self *AlpacadecimalTester) Name() string {
 
 func (self *AlpacadecimalTester) Init() {
 	self.parseCases = ParseCases
+
+	self.stringCases = make([]decimal.Decimal, len(ParseCases))
+	for i, c := range ParseCases {
+		d, err := decimal.NewFromString(c)
+		if err != nil {
+			panic(err)
+		}
+		self.stringCases[i] = d
+	}
 
 	parsePairs := func(pairs []Pair) []alpacadecimalPair {
 		result := make([]alpacadecimalPair, len(pairs))
@@ -49,60 +59,49 @@ func (self *AlpacadecimalTester) Init() {
 }
 
 func (self *AlpacadecimalTester) RunParse() int64 {
-	var n int64
 	for range 100000 {
 		for _, c := range self.parseCases {
 			_, err := decimal.NewFromString(c)
 			if err != nil {
 				panic(err)
 			}
-			n++
 		}
 	}
-	return n
+	return int64(len(self.parseCases) * 100000)
 }
 
 func (self *AlpacadecimalTester) RunString() int64 {
-	var n int64
 	for range 100000 {
-		for _, c := range self.addCases {
-			_ = c.a.String()
-			_ = c.b.String()
-			n += 2
+		for _, c := range self.stringCases {
+			_ = c.String()
 		}
 	}
-	return n
+	return int64(len(self.stringCases) * 100000)
 }
 
 func (self *AlpacadecimalTester) RunAdd() int64 {
-	var n int64
 	for range 100000 {
 		for _, c := range self.addCases {
 			_ = c.a.Add(c.b)
-			n++
 		}
 	}
-	return n
+	return int64(len(self.addCases) * 100000)
 }
 
 func (self *AlpacadecimalTester) RunMul() int64 {
-	var n int64
 	for range 100000 {
 		for _, c := range self.mulCases {
 			_ = c.a.Mul(c.b)
-			n++
 		}
 	}
-	return n
+	return int64(len(self.mulCases) * 100000)
 }
 
 func (self *AlpacadecimalTester) RunDiv() int64 {
-	var n int64
 	for range 100000 {
 		for _, c := range self.divCases {
 			_ = c.a.Div(c.b)
-			n++
 		}
 	}
-	return n
+	return int64(len(self.divCases) * 100000)
 }
