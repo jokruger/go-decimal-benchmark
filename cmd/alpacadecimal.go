@@ -1,34 +1,34 @@
 package main
 
 import (
-	"github.com/shopspring/decimal"
+	decimal "github.com/alpacahq/alpacadecimal"
 )
 
-type shopspringPair struct {
+type alpacadecimalPair struct {
 	a decimal.Decimal
 	b decimal.Decimal
 }
 
-type ShopspringTester struct {
+type AlpacadecimalTester struct {
 	parseCases []string
-	addCases   []shopspringPair
-	mulCases   []shopspringPair
-	divCases   []shopspringPair
+	addCases   []alpacadecimalPair
+	mulCases   []alpacadecimalPair
+	divCases   []alpacadecimalPair
 }
 
-func NewShopspringTester() Tester {
-	return &ShopspringTester{}
+func NewAlpacadecimalTester() Tester {
+	return &AlpacadecimalTester{}
 }
 
-func (self *ShopspringTester) Name() string {
-	return "shopspring.Decimal"
+func (self *AlpacadecimalTester) Name() string {
+	return "alpacadecimal.Decimal"
 }
 
-func (self *ShopspringTester) Init() {
+func (self *AlpacadecimalTester) Init() {
 	self.parseCases = ParseCases
 
-	parsePairs := func(pairs []Pair) []shopspringPair {
-		result := make([]shopspringPair, len(pairs))
+	parsePairs := func(pairs []Pair) []alpacadecimalPair {
+		result := make([]alpacadecimalPair, len(pairs))
 		for i, p := range pairs {
 			a, err := decimal.NewFromString(p.A)
 			if err != nil {
@@ -38,7 +38,7 @@ func (self *ShopspringTester) Init() {
 			if err != nil {
 				panic(err)
 			}
-			result[i] = shopspringPair{a, b}
+			result[i] = alpacadecimalPair{a, b}
 		}
 		return result
 	}
@@ -48,7 +48,7 @@ func (self *ShopspringTester) Init() {
 	self.divCases = parsePairs(DivCases)
 }
 
-func (self *ShopspringTester) RunParse() int64 {
+func (self *AlpacadecimalTester) RunParse() int64 {
 	var n int64
 	for range 100000 {
 		for _, c := range self.parseCases {
@@ -62,7 +62,7 @@ func (self *ShopspringTester) RunParse() int64 {
 	return n
 }
 
-func (self *ShopspringTester) RunString() int64 {
+func (self *AlpacadecimalTester) RunString() int64 {
 	var n int64
 	for range 100000 {
 		for _, c := range self.addCases {
@@ -74,7 +74,7 @@ func (self *ShopspringTester) RunString() int64 {
 	return n
 }
 
-func (self *ShopspringTester) RunAdd() int64 {
+func (self *AlpacadecimalTester) RunAdd() int64 {
 	var n int64
 	for range 100000 {
 		for _, c := range self.addCases {
@@ -85,7 +85,7 @@ func (self *ShopspringTester) RunAdd() int64 {
 	return n
 }
 
-func (self *ShopspringTester) RunMul() int64 {
+func (self *AlpacadecimalTester) RunMul() int64 {
 	var n int64
 	for range 100000 {
 		for _, c := range self.mulCases {
@@ -96,7 +96,7 @@ func (self *ShopspringTester) RunMul() int64 {
 	return n
 }
 
-func (self *ShopspringTester) RunDiv() int64 {
+func (self *AlpacadecimalTester) RunDiv() int64 {
 	var n int64
 	for range 100000 {
 		for _, c := range self.divCases {

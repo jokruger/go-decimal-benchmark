@@ -8,6 +8,7 @@ import (
 type Tester interface {
 	Name() string
 	Init()
+	RunString() int64
 	RunParse() int64
 	RunAdd() int64
 	RunMul() int64
@@ -17,7 +18,7 @@ type Tester interface {
 const NS = int64(1000000000)
 
 func runBenchmark(t Tester) {
-	fmt.Printf("%-20s", t.Name())
+	fmt.Printf("%-30s", t.Name())
 	t.Init()
 
 	var s time.Time
@@ -33,7 +34,18 @@ func runBenchmark(t Tester) {
 			break
 		}
 	}
-	fmt.Printf(" %15.2f", float64(ns)/float64(n))
+	fmt.Printf(" %15.3f", float64(ns)/float64(n))
+
+	n = 0
+	s = time.Now()
+	for {
+		n = n + t.RunString()
+		ns = time.Since(s).Nanoseconds()
+		if ns >= NS {
+			break
+		}
+	}
+	fmt.Printf(" %15.3f", float64(ns)/float64(n))
 
 	n = 0
 	s = time.Now()
@@ -44,7 +56,7 @@ func runBenchmark(t Tester) {
 			break
 		}
 	}
-	fmt.Printf(" %15.2f", float64(ns)/float64(n))
+	fmt.Printf(" %15.3f", float64(ns)/float64(n))
 
 	n = 0
 	s = time.Now()
@@ -55,7 +67,7 @@ func runBenchmark(t Tester) {
 			break
 		}
 	}
-	fmt.Printf(" %15.2f", float64(ns)/float64(n))
+	fmt.Printf(" %15.3f", float64(ns)/float64(n))
 
 	n = 0
 	s = time.Now()
@@ -66,13 +78,16 @@ func runBenchmark(t Tester) {
 			break
 		}
 	}
-	fmt.Printf(" %15.2f", float64(ns)/float64(n))
+	fmt.Printf(" %15.3f", float64(ns)/float64(n))
 
 	fmt.Println()
 }
 
 func main() {
-	fmt.Printf("%-20s %15s %15s %15s %15s\n\n", "", "parse (ns/op)", "add (ns/op)", "mul (ns/op)", "div (ns/op)")
+	fmt.Printf("%-30s %15s %15s %15s %15s %15s\n\n", "", "parse (ns/op)", "string (ns/op)", "add (ns/op)", "mul (ns/op)", "div (ns/op)")
 	runBenchmark(NewFloatTester())
+	runBenchmark(NewDec128Tester())
+	runBenchmark(NewUdecimalTester())
+	runBenchmark(NewAlpacadecimalTester())
 	runBenchmark(NewShopspringTester())
 }

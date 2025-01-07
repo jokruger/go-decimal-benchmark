@@ -1,44 +1,44 @@
 package main
 
 import (
-	"github.com/shopspring/decimal"
+	"github.com/quagmt/udecimal"
 )
 
-type shopspringPair struct {
-	a decimal.Decimal
-	b decimal.Decimal
+type udecimalPair struct {
+	a udecimal.Decimal
+	b udecimal.Decimal
 }
 
-type ShopspringTester struct {
+type UdecimalTester struct {
 	parseCases []string
-	addCases   []shopspringPair
-	mulCases   []shopspringPair
-	divCases   []shopspringPair
+	addCases   []udecimalPair
+	mulCases   []udecimalPair
+	divCases   []udecimalPair
 }
 
-func NewShopspringTester() Tester {
-	return &ShopspringTester{}
+func NewUdecimalTester() Tester {
+	return &UdecimalTester{}
 }
 
-func (self *ShopspringTester) Name() string {
-	return "shopspring.Decimal"
+func (self *UdecimalTester) Name() string {
+	return "udecimal.Decimal"
 }
 
-func (self *ShopspringTester) Init() {
+func (self *UdecimalTester) Init() {
 	self.parseCases = ParseCases
 
-	parsePairs := func(pairs []Pair) []shopspringPair {
-		result := make([]shopspringPair, len(pairs))
+	parsePairs := func(pairs []Pair) []udecimalPair {
+		result := make([]udecimalPair, len(pairs))
 		for i, p := range pairs {
-			a, err := decimal.NewFromString(p.A)
+			a, err := udecimal.Parse(p.A)
 			if err != nil {
 				panic(err)
 			}
-			b, err := decimal.NewFromString(p.B)
+			b, err := udecimal.Parse(p.B)
 			if err != nil {
 				panic(err)
 			}
-			result[i] = shopspringPair{a, b}
+			result[i] = udecimalPair{a, b}
 		}
 		return result
 	}
@@ -48,11 +48,11 @@ func (self *ShopspringTester) Init() {
 	self.divCases = parsePairs(DivCases)
 }
 
-func (self *ShopspringTester) RunParse() int64 {
+func (self *UdecimalTester) RunParse() int64 {
 	var n int64
 	for range 100000 {
 		for _, c := range self.parseCases {
-			_, err := decimal.NewFromString(c)
+			_, err := udecimal.Parse(c)
 			if err != nil {
 				panic(err)
 			}
@@ -62,7 +62,7 @@ func (self *ShopspringTester) RunParse() int64 {
 	return n
 }
 
-func (self *ShopspringTester) RunString() int64 {
+func (self *UdecimalTester) RunString() int64 {
 	var n int64
 	for range 100000 {
 		for _, c := range self.addCases {
@@ -74,7 +74,7 @@ func (self *ShopspringTester) RunString() int64 {
 	return n
 }
 
-func (self *ShopspringTester) RunAdd() int64 {
+func (self *UdecimalTester) RunAdd() int64 {
 	var n int64
 	for range 100000 {
 		for _, c := range self.addCases {
@@ -85,7 +85,7 @@ func (self *ShopspringTester) RunAdd() int64 {
 	return n
 }
 
-func (self *ShopspringTester) RunMul() int64 {
+func (self *UdecimalTester) RunMul() int64 {
 	var n int64
 	for range 100000 {
 		for _, c := range self.mulCases {
@@ -96,11 +96,14 @@ func (self *ShopspringTester) RunMul() int64 {
 	return n
 }
 
-func (self *ShopspringTester) RunDiv() int64 {
+func (self *UdecimalTester) RunDiv() int64 {
 	var n int64
 	for range 100000 {
 		for _, c := range self.divCases {
-			_ = c.a.Div(c.b)
+			_, err := c.a.Div(c.b)
+			if err != nil {
+				panic(err)
+			}
 			n++
 		}
 	}

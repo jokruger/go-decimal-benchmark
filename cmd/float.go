@@ -50,13 +50,25 @@ func (self *FloatTester) Init() {
 
 func (self *FloatTester) RunParse() int64 {
 	var n int64
-	for range 10000 {
+	for range 100000 {
 		for _, c := range self.parseCases {
 			_, err := strconv.ParseFloat(c, 64)
 			if err != nil {
 				panic(err)
 			}
 			n++
+		}
+	}
+	return n
+}
+
+func (self *FloatTester) RunString() int64 {
+	var n int64
+	for range 100000 {
+		for _, c := range self.addCases {
+			_ = strconv.FormatFloat(c.a, 'f', -1, 64)
+			_ = strconv.FormatFloat(c.b, 'f', -1, 64)
+			n += 2
 		}
 	}
 	return n
