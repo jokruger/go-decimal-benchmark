@@ -12,6 +12,8 @@ github.com/jokruger/dec128 v0.0.0-20250108104830-65fb8f7c6405 h1:GdwR7MaPbg/cTdE
 github.com/jokruger/dec128 v0.0.0-20250108104830-65fb8f7c6405/go.mod h1:Ma9N3JyZ9aAV41I7+ms8tyVbENDzwRVL0PbNZsJ2EPo=
 github.com/jokruger/dec128 v0.0.0-20250108105759-d3eaf427b71c h1:d4U6QH3EZ/kWOHAsZvt9kj27fxwi5bcqTxxoZtXQzjw=
 github.com/jokruger/dec128 v0.0.0-20250108105759-d3eaf427b71c/go.mod h1:Ma9N3JyZ9aAV41I7+ms8tyVbENDzwRVL0PbNZsJ2EPo=
+github.com/jokruger/dec128 v1.0.1 h1:/cPyJidWsfL66WIPcjetypSvbm0kd5iPy4ueXfJcgHQ=
+github.com/jokruger/dec128 v1.0.1/go.mod h1:Ma9N3JyZ9aAV41I7+ms8tyVbENDzwRVL0PbNZsJ2EPo=
 github.com/klauspost/cpuid/v2 v2.2.9 h1:66ze0taIn2H33fBvCkXuv9BmCwDfafmiIVpKV9kKGuY=
 github.com/klauspost/cpuid/v2 v2.2.9/go.mod h1:rqkxqrZ1EhYM9G+hXH7YdowN5R5RGN6NK4QwQ3WMXF8=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
