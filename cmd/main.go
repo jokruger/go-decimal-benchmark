@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"time"
+
+	. "github.com/klauspost/cpuid/v2"
 )
 
 type Tester interface {
@@ -84,6 +86,8 @@ func runBenchmark(t Tester) {
 }
 
 func main() {
+	fmt.Println("CPU:", CPU.BrandName)
+	fmt.Println()
 	fmt.Printf("%-30s %15s %15s %15s %15s %15s\n\n", "", "parse (ns/op)", "string (ns/op)", "add (ns/op)", "mul (ns/op)", "div (ns/op)")
 	runBenchmark(NewFloatTester())
 	runBenchmark(NewDec128Tester())
