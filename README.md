@@ -15,9 +15,9 @@ CPU: Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz
 
                                  parse (ns/op)  string (ns/op)     add (ns/op)     mul (ns/op)     div (ns/op)
 
-float64 (baseline)                      33.408          92.405           0.335           0.340           0.331
-dec128.Dec128                           13.986          36.404          10.518           7.637          34.129
-udecimal.Decimal                        22.383          44.740          11.998          11.141          40.701
-alpacadecimal.Decimal                   90.959          83.291         222.275          70.552         481.113
-shopspring.Decimal                     160.160         183.984         241.129          74.726         451.901
+float64 (baseline)                      30.303          82.617           0.352           0.362           0.344
+dec128.Dec128                           13.314          33.699          11.586           7.581          34.058
+udecimal.Decimal                        23.258          41.481          12.151          11.210          40.126
+alpacadecimal.Decimal                   88.490          77.343         205.212          60.344         454.116
+shopspring.Decimal                     151.691         171.424         216.789          66.622         435.903
 ```
