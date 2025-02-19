@@ -6,6 +6,12 @@ github.com/ericlagergren/decimal v0.0.0-20240411145413-00de7ca16731 h1:R/ZjJpjQK
 github.com/ericlagergren/decimal v0.0.0-20240411145413-00de7ca16731/go.mod h1:M9R1FoZ3y//hwwnJtO51ypFGwm8ZfpxPT/ZLtO1mcgQ=
 github.com/jokruger/dec128 v1.0.8 h1:xxVXH8VZhiniR0+gMRSBk+7nxDWQex4MwPPLSY7+uXE=
 github.com/jokruger/dec128 v1.0.8/go.mod h1:Ma9N3JyZ9aAV41I7+ms8tyVbENDzwRVL0PbNZsJ2EPo=
+github.com/jokruger/dec128 v1.0.10 h1:yJDjtyOd37PZ5ewZOm9r9CRktY3eQeXlPHkKOkD4+UU=
+github.com/jokruger/dec128 v1.0.10/go.mod h1:XmLxm2Jow2CB5IBBR/VhC4MiAkwBzvP9nZBO9n/1VXI=
+github.com/jokruger/dec128 v1.0.11 h1:H3FjlLd6e0eafhcIUkrWaoZFd5WIOA32FGDBgBIb+sE=
+github.com/jokruger/dec128 v1.0.11/go.mod h1:Vg9ZZoiZ57auCW4NkV97PNy7ajO3LI1pnC7/39iBzLc=
+github.com/jokruger/gobu v1.0.2 h1:G+1WC2upW5+7h89ZqNw7B2APTupcGozQk8c4CjVAe2M=
+github.com/jokruger/gobu v1.0.2/go.mod h1:1z+VCrmOY7WS8/xbObhTOenftYGXLK1uD83gDsC2Twc=
 github.com/klauspost/cpuid/v2 v2.2.9 h1:66ze0taIn2H33fBvCkXuv9BmCwDfafmiIVpKV9kKGuY=
 github.com/klauspost/cpuid/v2 v2.2.9/go.mod h1:rqkxqrZ1EhYM9G+hXH7YdowN5R5RGN6NK4QwQ3WMXF8=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
